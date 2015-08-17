@@ -17,9 +17,9 @@ var compile = function(){
 var watch = function(){
     gulp.watch('./src/**/*.js', function () {
         gutil.log('Source files changed, recompiling...');
-        grun('compile');
+        grun('compile:source');
     });
 };
 
-gulp.task('compile', compile);
-gulp.task('watch', ['compile'], watch);
+gulp.task('compile:source', compile);
+gulp.task('watch:source', ['compile:source'], watch);

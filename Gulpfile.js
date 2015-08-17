@@ -1,1 +1,2 @@
-require('./tasks/build');
+require('./tasks/source');
+require('./tasks/tests');
