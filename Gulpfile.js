@@ -1,2 +1,12 @@
+require('source-map-support').install();
+require('babel/polyfill');
+
 require('./tasks/source');
-require('./tasks/tests');
+
+var gulp = require('gulp');
+var mocha = require('gulp-mocha');
+
+gulp.task('run:tests', ['compile:source'], function () {
+    gulp.src('./dist/tests/**/*')
+        .pipe(mocha());
+});
