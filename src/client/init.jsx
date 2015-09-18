@@ -2,28 +2,26 @@ import 'babel/polyfill';
 import '../shared/utils/ArrayUtils';
 
 import AppRoutes from '../shared/Routes';
-import Flux from '../shared/Flux';
-import FluxComponent from 'flummox/component';
+import { createStore } from 'redux';
+import InitialStoreState from '../shared/constants/InitialStoreState';
+import { Provider } from 'react-redux';
 import React from 'react';
+import Reducers from '../shared/reducers';
 import Router from 'react-router';
-import RouteUtils from '../shared/utils/RouteUtils';
-
-const flux = new Flux();
 
 const router = Router.create({
     routes: AppRoutes,
     location: Router.HistoryLocation
 });
 
+const store = createStore(Reducers, InitialStoreState);
+
 router.run((Handler, state) => {
-    RouteUtils.init(state.routes, {state, flux}).then(() => {
+    const appRoot = (
+        <Provider store={store}>
+            <Handler {...state} />
+        </Provider>
+    );
 
-        const appRoot = (
-            <FluxComponent flux={flux}>
-                <Handler {...state} />
-            </FluxComponent>
-        );
-
-        React.render(appRoot, document.getElementById('app'));
-    });
+    React.render(appRoot, document.getElementById('app'));
 });

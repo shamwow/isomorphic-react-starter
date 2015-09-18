@@ -13,7 +13,11 @@ var webpackConfig = {
             {
                 test: /\.jsx?$/,
                 include: path.resolve(__dirname, '../src/'),
-                loader: 'babel-loader?optional[]=runtime&optional[]=es7.asyncFunctions'
+                loader: 'babel-loader',
+                query: {
+                    optional: ['runtime'],
+                    stage: 0
+                }
             }
         ]
     },
@@ -30,8 +34,8 @@ var webpackConfig = {
 
 var compile = function(){
     return gulp.src('./src/client/init.jsx')
-        .pipe(webpack(webpackConfig))
-        .pipe(gulp.dest(path.resolve(__dirname, '../dist/client/static/js/')));
+            .pipe(webpack(webpackConfig))
+            .pipe(gulp.dest(path.resolve(__dirname, '../dist/client/static/js/')));
 };
 
 var watch = function(done){
@@ -44,8 +48,8 @@ var watch = function(done){
     };
 
     gulp.src('./src/client/init.jsx')
-        .pipe(webpack(assign({watch: true, onCompile: onCompile}, webpackConfig)))
-        .pipe(gulp.dest(path.resolve(__dirname, '../dist/client/static/js/')));
+            .pipe(webpack(assign({watch: true, onCompile: onCompile}, webpackConfig)))
+            .pipe(gulp.dest(path.resolve(__dirname, '../dist/client/static/js/')));
 };
 
 gulp.task('compile:client', compile);
