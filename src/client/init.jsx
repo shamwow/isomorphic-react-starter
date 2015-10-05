@@ -19,7 +19,7 @@ const store = createStore(Reducers, InitialStoreState);
 router.run((Handler, state) => {
     const appRoot = (
         <Provider store={store}>
-            <Handler {...state} />
+            {() => <Handler {...state} />}
         </Provider>
     );
 

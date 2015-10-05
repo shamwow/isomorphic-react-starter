@@ -6,6 +6,9 @@
   "directories": {
     "test": "tests"
   },
+  "scripts": {
+    "start": "./node_modules/gulp/bin/gulp.js start"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/shahmeernavid/react-starter.git"
@@ -35,6 +38,7 @@
   },
   "dependencies": {
     "body-parser": "^1.14.0",
+    "express": "^4.13.3",
     "memory-fs": "^0.2.0",
     "morgan": "^1.6.1",
     "node-bourbon": "^4.2.3",

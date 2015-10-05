@@ -21,14 +21,12 @@ gulp.task('move:static_assets', function(){
         .pipe(gulp.dest('./dist/client/static/'));
 });
 
-gulp.task('start', ['watch:server'], function(){
+gulp.task('start', ['watch:server', 'watch:shared', 'watch:css', 'watch:client'], function(){
     nodemon({
         execMap: { js: 'node' },
         script: './dist/server/index.js',
         watch: ['./dist'],
         ignore: ['./dist/static'],
         env: { ENVIRONMENT: 'testing' }
-    }).on('restart', function(){
-        gutil.log('Restarted server.');
     });
 });

@@ -14,4 +14,6 @@ app.use(morgan(config.logging));
 
 app.use(routes);
 
-app.listen(config.port || 5000);
+app.listen(config.port || 5000, () => {
+    console.log('Started server.');
+});

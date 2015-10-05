@@ -44,7 +44,7 @@ routes.get('*', (req, res) => {
     router.run((Handler, state) => {
         const rendered = React.renderToString(
             <Provider store={store}>
-                <Handler {...state} />
+                { () => <Handler {...state} /> }
             </Provider>
         );
         // TODO: put into seperate file.
