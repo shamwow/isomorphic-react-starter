@@ -1,7 +1,6 @@
 var bourbon = require('node-bourbon');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var setup = require('../tools/gulp-custom-setup');
 var sourcemaps = require('gulp-sourcemaps');
 
 var compile = function(){
@@ -14,4 +13,14 @@ var compile = function(){
             .pipe(gulp.dest('./dist/client/static/css/'));
 };
 
-setup(compile, 'css', 'sass')
+var watch = function(){
+    var cb = function(event){
+        gutil.log('CSS files changed, recompiling....');
+        grun('compile:css');
+    };
+
+    gulp.watch('./src/sass/**/*.scss', cb);
+};
+
+gulp.task('compile:css', compile);
+gulp.task('watch:css', ['compile:css'], watch);

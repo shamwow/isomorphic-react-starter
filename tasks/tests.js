@@ -1,6 +1,5 @@
 var babel = require('gulp-babel');
 var gulp = require('gulp');
-var setup = require('../tools/gulp-custom-setup');
 var sourcemaps = require('gulp-sourcemaps');
 
 var compile = function(){
@@ -13,4 +12,15 @@ var compile = function(){
             .pipe(gulp.dest('./dist/tests/'));
 };
 
-setup(compile, 'tests');
+var watch = function(){
+    var cb = function(event){
+        gutil.log('Test files changed, recompiling....');
+        grun('compile:test');
+    };
+
+    gulp.watch('./src/test/**/*.jsx', cb);
+    gulp.watch('./src/test/**/*.js', cb);
+};
+
+gulp.task('compile:test', compile);
+gulp.task('watch:test', ['compile:test'], watch);

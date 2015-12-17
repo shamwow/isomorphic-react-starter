@@ -1,6 +1,5 @@
 var babel = require('gulp-babel');
 var gulp = require('gulp');
-var setup = require('../tools/gulp-custom-setup');
 var sourcemaps = require('gulp-sourcemaps');
 
 var compile = function(){
@@ -13,4 +12,15 @@ var compile = function(){
             .pipe(gulp.dest('./dist/shared/'));
 };
 
-setup(compile, 'shared');
+var watch = function(){
+    var cb = function(event){
+        gutil.log('Shared files changed, recompiling....');
+        grun('compile:shared');
+    };
+
+    gulp.watch('./src/shared/**/*.jsx', cb);
+    gulp.watch('./src/shared/**/*.js', cb);
+};
+
+gulp.task('compile:shared', compile);
+gulp.task('watch:shared', ['compile:shared'], watch);

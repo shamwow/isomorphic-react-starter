@@ -8,7 +8,8 @@ require('./tasks/shared');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var mocha = require('gulp-mocha');
-var nodemon = require('nodemon');
+var nodemon = require('gulp-nodemon');
+var exec = require('child_process').exec;
 
 gulp.task('run:tests', ['compile:server', 'compile:shared', 'compile:client', 'compile:css'],
         function(){
@@ -22,11 +23,13 @@ gulp.task('move:static_assets', function(){
 });
 
 gulp.task('start', ['watch:server', 'watch:shared', 'watch:css', 'watch:client'], function(){
-    nodemon({
+    var proc = nodemon({
         execMap: { js: 'node' },
         script: './dist/server/index.js',
         watch: ['./dist'],
         ignore: ['./dist/static'],
         env: { ENVIRONMENT: 'testing' }
+    }).on('quit', function(err) {
+        process.exit(1);
     });
 });
